@@ -1,4 +1,4 @@
-package storage;
+package ru.saparsky.basejava.storage;
 
 public class ArrayStorageTest extends AbstractArrayStorageTest {
 

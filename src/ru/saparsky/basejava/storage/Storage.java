@@ -1,6 +1,6 @@
-package storage;
+package ru.saparsky.basejava.storage;
 
-import model.Resume;
+import ru.saparsky.basejava.model.Resume;
 
 public interface Storage {
 

@@ -1,4 +1,4 @@
-package model;
+package ru.saparsky.basejava.model;
 
 import java.util.UUID;
 

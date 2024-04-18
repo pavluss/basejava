@@ -1,6 +1,8 @@
-import model.Resume;
-import storage.ArrayStorage;
-import storage.Storage;
+package ru.saparsky.basejava;
+
+import ru.saparsky.basejava.model.Resume;
+import ru.saparsky.basejava.storage.ArrayStorage;
+import ru.saparsky.basejava.storage.Storage;
 
 import java.io.BufferedReader;
 import java.io.IOException;
