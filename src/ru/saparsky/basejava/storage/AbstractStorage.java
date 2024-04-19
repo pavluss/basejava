@@ -4,14 +4,24 @@ import ru.saparsky.basejava.exception.ExistStorageException;
 import ru.saparsky.basejava.exception.NotExistStorageException;
 import ru.saparsky.basejava.model.Resume;
 
+import java.util.Comparator;
+import java.util.List;
+
 public abstract class AbstractStorage implements Storage {
 
     protected abstract Object getIndex(String uuid);
+
     protected abstract void doUpdate(Resume r, Object index);
+
     protected abstract void doSave(Resume r, Object index);
+
     protected abstract Resume doGet(Object index);
+
     protected abstract void doDelete(Object index);
+
     protected abstract boolean isExist(Object index);
+
+    protected abstract List<Resume> doCopyAll();
 
 
     @Override
@@ -54,6 +64,10 @@ public abstract class AbstractStorage implements Storage {
         return index;
     }
 
-
+    public List<Resume> getAllSorted() {
+        List<Resume> result = doCopyAll();
+        result.sort(Comparator.comparing(Resume::getFullName).thenComparing(Resume::getUuid));
+        return result;
+    }
 
 }

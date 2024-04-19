@@ -2,16 +2,18 @@ package ru.saparsky.basejava.storage;
 
 import ru.saparsky.basejava.model.Resume;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-public class MapStorage extends AbstractStorage {
+public class MapUuidStorage extends AbstractStorage {
 
     private final Map<String, Resume> storage = new HashMap<>();
 
     @Override
-    protected Object getIndex(String uuid) {
-        return storage.get(uuid) != null ? uuid : null;
+    protected String getIndex(String uuid) {
+        return uuid;
     }
 
     @Override
@@ -36,17 +38,17 @@ public class MapStorage extends AbstractStorage {
 
     @Override
     protected boolean isExist(Object index) {
-        return index != null;
+        return storage.containsKey((String) index);
+    }
+
+    @Override
+    protected List<Resume> doCopyAll() {
+        return new ArrayList<>(storage.values());
     }
 
     @Override
     public void clear() {
         storage.clear();
-    }
-
-    @Override
-    public Resume[] getAll() {
-        return storage.values().toArray(new Resume[0]);
     }
 
     @Override

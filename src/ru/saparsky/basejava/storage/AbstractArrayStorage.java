@@ -4,6 +4,7 @@ import ru.saparsky.basejava.exception.StorageException;
 import ru.saparsky.basejava.model.Resume;
 
 import java.util.Arrays;
+import java.util.List;
 
 public abstract class AbstractArrayStorage extends AbstractStorage {
     protected static final int STORAGE_LIMIT = 10000;
@@ -12,13 +13,17 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     protected int size = 0;
 
     protected abstract Object getIndex(String uuid);
+
     protected abstract void insertElement(Resume r, int index);
+
     protected abstract void deleteElement(int index);
 
+    @Override
     public int size() {
         return size;
     }
 
+    @Override
     public void doSave(Resume r, Object index) {
         if (size == STORAGE_LIMIT) {
             throw new StorageException("Storage is full", r.getUuid());
@@ -44,13 +49,15 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
         size--;
     }
 
+    @Override
     public void clear() {
         Arrays.fill(storage, 0, size, null);
         size = 0;
     }
 
-    public Resume[] getAll() {
-        return Arrays.copyOfRange(storage, 0, size);
+    @Override
+    protected List<Resume> doCopyAll() {
+        return Arrays.asList(Arrays.copyOfRange(storage, 0, size));
     }
 
     @Override

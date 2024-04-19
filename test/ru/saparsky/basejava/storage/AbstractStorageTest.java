@@ -1,10 +1,12 @@
 package ru.saparsky.basejava.storage;
 
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import ru.saparsky.basejava.exception.ExistStorageException;
 import ru.saparsky.basejava.exception.NotExistStorageException;
 import ru.saparsky.basejava.model.Resume;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -23,8 +25,8 @@ public abstract class AbstractStorageTest {
     @Test
     void size() {
         //given
-        Resume resume1 = new Resume("uuid1");
-        Resume resume2 = new Resume("uuid2");
+        Resume resume1 = new Resume("name1");
+        Resume resume2 = new Resume("name2");
         //when
         storage.save(resume1);
         storage.save(resume2);
@@ -35,7 +37,7 @@ public abstract class AbstractStorageTest {
     @Test
     void get() {
         //given
-        Resume resumeToSave = new Resume("uuid1");
+        Resume resumeToSave = new Resume("name1");
         storage.save(resumeToSave);
         //when
         Resume obtainedResume = storage.get(resumeToSave.getUuid());
@@ -55,8 +57,8 @@ public abstract class AbstractStorageTest {
     @Test
     void clear() {
         //given
-        Resume resumeToSave1 = new Resume("uuid1");
-        Resume resumeToSave2 = new Resume("uuid2");
+        Resume resumeToSave1 = new Resume("name1");
+        Resume resumeToSave2 = new Resume("name2");
         storage.save(resumeToSave1);
         storage.save(resumeToSave2);
         //when
@@ -68,7 +70,7 @@ public abstract class AbstractStorageTest {
     @Test
     void save() {
         //given
-        Resume resumeToSave = new Resume("uuid1");
+        Resume resumeToSave = new Resume("name1");
         //when
         storage.save(resumeToSave);
         //then
@@ -79,7 +81,7 @@ public abstract class AbstractStorageTest {
     @Test
     void saveExist() {
         //given
-        Resume resumeToSave = new Resume("uuid1");
+        Resume resumeToSave = new Resume("name1");
         storage.save(resumeToSave);
         //when
         assertThrows(ExistStorageException.class, () -> storage.save(resumeToSave));
@@ -91,7 +93,7 @@ public abstract class AbstractStorageTest {
     @Test
     void delete() {
         //given
-        Resume resumeToSave = new Resume("uuid1");
+        Resume resumeToSave = new Resume("name1");
         storage.save(resumeToSave);
         //when
         storage.delete(resumeToSave.getUuid());
@@ -111,20 +113,21 @@ public abstract class AbstractStorageTest {
     @Test
     void update() {
         //given
-        Resume resumeToSave = new Resume("uuid1");
+        Resume resumeToSave = new Resume("uuid1", "name1");
         storage.save(resumeToSave);
         //when
-        Resume resumeToUpdate = new Resume("uuid1");
+        Resume resumeToUpdate = new Resume("uuid1", "new name");
         storage.update(resumeToUpdate);
         //then
         assertNotSame(resumeToSave, resumeToUpdate);
+        assertEquals(storage.get(resumeToSave.getUuid()).getFullName(), resumeToUpdate.getFullName());
     }
 
     @Test
     void updateNotExist() {
         //given
         //when
-        Resume resumeToUpdate = new Resume("uuid1");
+        Resume resumeToUpdate = new Resume("name1");
         //then
         assertThrows(NotExistStorageException.class, () -> storage.update(resumeToUpdate));
     }
@@ -132,21 +135,20 @@ public abstract class AbstractStorageTest {
     @Test
     void getAll() {
         //given
-        Resume resumeToSave1 = new Resume("uuid1");
-        Resume resumeToSave2 = new Resume("uuid2");
-        Resume resumeToSave3 = new Resume("uuid3");
+        Resume resumeToSave1 = new Resume("uuid1", "name1");
+        Resume resumeToSave2 = new Resume("uuid2", "name2");
+        Resume resumeToSave3 = new Resume("uuid3", "name3");
         storage.save(resumeToSave1);
         storage.save(resumeToSave2);
         storage.save(resumeToSave3);
         //when
-        Resume[] obtainedResumes = storage.getAll();
+        List<Resume> obtainedResumes = storage.getAllSorted();
         //then
-        assertEquals(3, obtainedResumes.length);
-//        assertEquals(resumeToSave1, obtainedResumes[0]);
-//        assertEquals(resumeToSave2, obtainedResumes[1]);
-//        assertEquals(resumeToSave3, obtainedResumes[2]);
+        assertEquals(3, obtainedResumes.size());
+        assertEquals(resumeToSave1, obtainedResumes.get(0));
+        assertEquals(resumeToSave2, obtainedResumes.get(1));
+        assertEquals(resumeToSave3, obtainedResumes.get(2));
     }
-
 
 
 }
