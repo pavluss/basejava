@@ -1,15 +1,13 @@
 package ru.saparsky.basejava.storage;
 
-import org.junit.jupiter.api.Test;
 import ru.saparsky.basejava.model.*;
 
-import java.time.LocalDate;
+import java.time.Month;
 
 public class ResumeTestData {
 
-    @Test
-    void showResume() {
-        Resume r = new Resume("Name 1");
+    public static Resume getResume(String uuid, String fullName) {
+        Resume r = new Resume(uuid, fullName);
         r.setContact(ContactType.PHONE, "+79001234567");
         r.setContact(ContactType.SKYPE, "skype");
         r.setContact(ContactType.EMAIL, "mail@mail.com");
@@ -22,28 +20,28 @@ public class ResumeTestData {
                 new Organization(
                         "Organization 1",
                         "https://organization1.com",
-                        "Title organization 1",
-                        "Description organization 1",
-                        LocalDate.of(2023, 6, 10),
-                        LocalDate.of(2023, 10, 10))
-        ));
+                        new Organization.Position(
+                                "Title organization 1",
+                                "Description organization 1",
+                                2023, Month.SEPTEMBER),
+                        new Organization.Position(
+                                "Title organization 1",
+                                "Description organization 1",
+                                2022, Month.APRIL,
+                                2023, Month.MAY)
+                )));
         r.setSection(SectionType.EDUCATION, new OrganizationSection(
                 new Organization(
                         "Institute",
                         null,
-                        "Title Institute",
-                        null,
-                        LocalDate.of(2018, 6, 10),
-                        LocalDate.of(2021, 10, 10))
-        ));
+                        new Organization.Position(
+                                "Title Institute",
+                                null,
+                                2021, Month.SEPTEMBER,
+                                2023, Month.JANUARY
+                        ))));
 
-        System.out.println(r.getFullName());
-        for (ContactType contactType : ContactType.values()) {
-            System.out.println(contactType.getTitle() + ": " + r.getContact(contactType));
-        }
-        for (SectionType sectionType : SectionType.values()) {
-            System.out.println(sectionType.getTitle() + ": " + r.getSection(sectionType));
-        }
-
+        return r;
     }
+
 }
