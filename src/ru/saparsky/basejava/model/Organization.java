@@ -2,13 +2,16 @@ package ru.saparsky.basejava.model;
 
 import ru.saparsky.basejava.util.DateUtil;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-public class Organization {
+public class Organization implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     private final Link link;
     private final List<Position> positions;
 
@@ -44,7 +47,7 @@ public class Organization {
         return "Organization{" + link + ", " + positions + '}';
     }
 
-    public static class Position {
+    public static class Position implements Serializable {
         private final String title;
         private final String description;
         private final LocalDate startDate;

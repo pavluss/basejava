@@ -6,11 +6,14 @@ import ru.saparsky.basejava.exception.ExistStorageException;
 import ru.saparsky.basejava.exception.NotExistStorageException;
 import ru.saparsky.basejava.model.Resume;
 
+import java.io.File;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public abstract class AbstractStorageTest {
+    protected static final File STORAGE_DIR = new File("test\\ru\\saparsky\\basejava\\resource\\storage");
+
     protected final Storage storage;
 
     protected AbstractStorageTest(Storage storage) {
