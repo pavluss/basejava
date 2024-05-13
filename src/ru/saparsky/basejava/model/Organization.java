@@ -1,7 +1,12 @@
 package ru.saparsky.basejava.model;
 
 import ru.saparsky.basejava.util.DateUtil;
+import ru.saparsky.basejava.util.LocalDateAdapter;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Month;
@@ -9,11 +14,16 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Organization implements Serializable {
+    @Serial
     private static final long serialVersionUID = 1L;
 
-    private final Link link;
-    private final List<Position> positions;
+    private Link link;
+    private List<Position> positions;
+
+    public Organization() {
+    }
 
     public Organization(Link link, List<Position> positions) {
         this.link = link;
@@ -22,6 +32,14 @@ public class Organization implements Serializable {
 
     public Organization(String name, String url, Position... positionList) {
         this(new Link(name, url), Arrays.asList(positionList));
+    }
+
+    public Link getLink() {
+        return link;
+    }
+
+    public List<Position> getPositions() {
+        return positions;
     }
 
     @Override
@@ -47,11 +65,17 @@ public class Organization implements Serializable {
         return "Organization{" + link + ", " + positions + '}';
     }
 
+    @XmlAccessorType(XmlAccessType.FIELD)
     public static class Position implements Serializable {
-        private final String title;
-        private final String description;
-        private final LocalDate startDate;
-        private final LocalDate endDate;
+        private String title;
+        private String description;
+        @XmlJavaTypeAdapter(LocalDateAdapter.class)
+        private LocalDate startDate;
+        @XmlJavaTypeAdapter(LocalDateAdapter.class)
+        private LocalDate endDate;
+
+        public Position() {
+        }
 
         public Position(String title, String description, int startYear, Month startMonth) {
             this(title, description, DateUtil.of(startYear, startMonth), DateUtil.NOW);
@@ -61,13 +85,28 @@ public class Organization implements Serializable {
             this(title, description, DateUtil.of(startYear, startMonth), DateUtil.of(endYear, endMonth));
         }
 
+        public String getTitle() {
+            return title;
+        }
+
+        public String getDescription() {
+            return description;
+        }
+
+        public LocalDate getStartDate() {
+            return startDate;
+        }
+
+        public LocalDate getEndDate() {
+            return endDate;
+        }
 
         public Position(String title, String description, LocalDate startDate, LocalDate endDate) {
             Objects.requireNonNull(startDate, "startDate must not be null");
             Objects.requireNonNull(endDate, "endDate must not be null");
             Objects.requireNonNull(title, "title must not be null");
             this.title = title;
-            this.description = description;
+            this.description = description == null ? "" : description;
             this.startDate = startDate;
             this.endDate = endDate;
         }
