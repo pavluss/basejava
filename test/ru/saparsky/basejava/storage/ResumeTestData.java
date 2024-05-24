@@ -1,14 +1,12 @@
 package ru.saparsky.basejava.storage;
 
-import ru.saparsky.basejava.model.*;
-
-import java.time.Month;
+import ru.saparsky.basejava.model.Resume;
 
 public class ResumeTestData {
 
     public static Resume getResume(String uuid, String fullName) {
         Resume r = new Resume(uuid, fullName);
-        r.addContact(ContactType.PHONE, "+79001234567");
+/*        r.addContact(ContactType.PHONE, "+79001234567");
         r.addContact(ContactType.SKYPE, "skype");
         r.addContact(ContactType.EMAIL, "mail@mail.com");
         r.addContact(ContactType.LINKEDIN, "linkedin");
@@ -40,7 +38,7 @@ public class ResumeTestData {
                                 2021, Month.SEPTEMBER,
                                 2023, Month.JANUARY
                         ))));
-
+*/
         return r;
     }
 
