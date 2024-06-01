@@ -1,16 +1,17 @@
 package ru.saparsky.basejava.storage;
 
+import ru.saparsky.basejava.model.ContactType;
 import ru.saparsky.basejava.model.Resume;
 
 public class ResumeTestData {
 
     public static Resume getResume(String uuid, String fullName) {
         Resume r = new Resume(uuid, fullName);
-/*        r.addContact(ContactType.PHONE, "+79001234567");
+        r.addContact(ContactType.PHONE, "+79001234567");
         r.addContact(ContactType.SKYPE, "skype");
         r.addContact(ContactType.EMAIL, "mail@mail.com");
         r.addContact(ContactType.LINKEDIN, "linkedin");
-        r.addSection(SectionType.OBJECTIVE, new TextSection("Objective 1"));
+ /*       r.addSection(SectionType.OBJECTIVE, new TextSection("Objective 1"));
         r.addSection(SectionType.PERSONAL, new TextSection("Personal 1"));
         r.addSection(SectionType.ACHIEVEMENT, new ListSection("Achievement 1", "Achievement 2", "Achievement 3"));
         r.addSection(SectionType.QUALIFICATIONS, new ListSection("Java", "SQL", "Spring"));

@@ -5,9 +5,12 @@ import org.junit.jupiter.api.Test;
 import ru.saparsky.basejava.Config;
 import ru.saparsky.basejava.exception.ExistStorageException;
 import ru.saparsky.basejava.exception.NotExistStorageException;
+import ru.saparsky.basejava.model.ContactType;
 import ru.saparsky.basejava.model.Resume;
 
 import java.io.File;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -118,13 +121,18 @@ public abstract class AbstractStorageTest {
     void update() {
         //given
         Resume resumeToSave = ResumeTestData.getResume("uuid1", "name1");
+        resumeToSave.addContact(ContactType.GITHUB, "TEST_GIT");
         storage.save(resumeToSave);
         //when
         Resume resumeToUpdate = ResumeTestData.getResume("uuid1", "new name");
+        resumeToUpdate.addContact(ContactType.EMAIL, "test@mail.com");
         storage.update(resumeToUpdate);
         //then
-        assertNotSame(resumeToSave, resumeToUpdate);
-        assertEquals(storage.get(resumeToSave.getUuid()).getFullName(), resumeToUpdate.getFullName());
+        String uuid = resumeToSave.getUuid();
+        assertNotEquals(resumeToSave, resumeToUpdate);
+        assertEquals(storage.get(uuid).getFullName(), resumeToUpdate.getFullName());
+        assertNotEquals(storage.get(uuid).getContacts(), resumeToSave.getContacts());
+        assertEquals(storage.get(uuid).getContacts(), resumeToUpdate.getContacts());
     }
 
     @Test
@@ -149,9 +157,10 @@ public abstract class AbstractStorageTest {
         List<Resume> obtainedResumes = storage.getAllSorted();
         //then
         assertEquals(3, obtainedResumes.size());
-        assertEquals(resumeToSave1, obtainedResumes.get(0));
-        assertEquals(resumeToSave2, obtainedResumes.get(1));
-        assertEquals(resumeToSave3, obtainedResumes.get(2));
+
+        List<Resume> sortedResumes = Arrays.asList(resumeToSave1, resumeToSave2, resumeToSave3);
+        Collections.sort(sortedResumes);
+        assertEquals(sortedResumes, obtainedResumes);
     }
 
 
