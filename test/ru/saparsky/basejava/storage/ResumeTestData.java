@@ -8,15 +8,15 @@ public class ResumeTestData {
 
     public static Resume getResume(String uuid, String fullName) {
         Resume r = new Resume(uuid, fullName);
-        r.addContact(ContactType.PHONE, "+79001234567");
-        r.addContact(ContactType.SKYPE, "skype");
-        r.addContact(ContactType.EMAIL, "mail@mail.com");
-        r.addContact(ContactType.LINKEDIN, "linkedin");
-        r.addSection(SectionType.OBJECTIVE, new TextSection("Objective 1"));
-        r.addSection(SectionType.PERSONAL, new TextSection("Personal 1"));
-        r.addSection(SectionType.ACHIEVEMENT, new ListSection("Achievement 1", "Achievement 2", "Achievement 3"));
-        r.addSection(SectionType.QUALIFICATIONS, new ListSection("Java", "SQL", "Spring"));
-        r.addSection(SectionType.EXPERIENCE, new OrganizationSection(
+        r.setContact(ContactType.PHONE, "+79001234567");
+        r.setContact(ContactType.SKYPE, "skype");
+        r.setContact(ContactType.EMAIL, "mail@mail.com");
+        r.setContact(ContactType.LINKEDIN, "linkedin");
+        r.setSection(SectionType.OBJECTIVE, new TextSection("Objective 1"));
+        r.setSection(SectionType.PERSONAL, new TextSection("Personal 1"));
+        r.setSection(SectionType.ACHIEVEMENT, new ListSection("Achievement 1", "Achievement 2", "Achievement 3"));
+        r.setSection(SectionType.QUALIFICATIONS, new ListSection("Java", "SQL", "Spring"));
+        r.setSection(SectionType.EXPERIENCE, new OrganizationSection(
                 new Organization(
                         "Organization 1",
                         "https://organization1.com",
@@ -30,7 +30,7 @@ public class ResumeTestData {
                                 2022, Month.APRIL,
                                 2023, Month.MAY)
                 )));
-        r.addSection(SectionType.EDUCATION, new OrganizationSection(
+        r.setSection(SectionType.EDUCATION, new OrganizationSection(
                 new Organization(
                         "Institute",
                         null,

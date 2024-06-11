@@ -121,11 +121,11 @@ public abstract class AbstractStorageTest {
     void update() {
         //given
         Resume resumeToSave = ResumeTestData.getResume("uuid1", "name1");
-        resumeToSave.addContact(ContactType.GITHUB, "TEST_GIT");
+        resumeToSave.setContact(ContactType.GITHUB, "TEST_GIT");
         storage.save(resumeToSave);
         //when
         Resume resumeToUpdate = ResumeTestData.getResume("uuid1", "new name");
-        resumeToUpdate.addContact(ContactType.EMAIL, "test@mail.com");
+        resumeToUpdate.setContact(ContactType.EMAIL, "test@mail.com");
         storage.update(resumeToUpdate);
         //then
         String uuid = resumeToSave.getUuid();

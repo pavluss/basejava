@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class ListSection extends Section {
+    public static final ListSection EMPTY = new ListSection("");
     @Serial
     private static final long serialVersionUID = 1L;
 
@@ -47,4 +48,5 @@ public class ListSection extends Section {
     public int hashCode() {
         return list.hashCode();
     }
+
 }

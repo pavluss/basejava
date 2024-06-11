@@ -76,12 +76,12 @@ public class DataStreamSerializer implements StreamSerializer {
             Resume resume = new Resume(uuid, fullName);
             int size = dis.readInt();
             for (int i = 0; i < size; i++) {
-                resume.addContact(ContactType.valueOf(dis.readUTF()), dis.readUTF());
+                resume.setContact(ContactType.valueOf(dis.readUTF()), dis.readUTF());
             }
             size = dis.readInt();
             for (int i = 0; i < size; i++) {
                 SectionType sectionType = SectionType.valueOf(dis.readUTF());
-                resume.addSection(sectionType, readSection(dis, sectionType));
+                resume.setSection(sectionType, readSection(dis, sectionType));
             }
 
             return resume;
